@@ -18,7 +18,7 @@ namespace Proxy.Primitives
                 {
                     true => "online",
                     false => "offline",
-                    _ => "uknown"
+                    _ => "unknown"
                 };
             }
         }
