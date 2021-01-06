@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Proxy.Primitives
 {
@@ -35,13 +38,13 @@ namespace Proxy.Primitives
         public Proxy(Uri address)
         {
             Address = address;
-            Type = (ProxyType) Enum.Parse(typeof(ProxyType), address.Scheme, true);
+            Type = (ProxyType)Enum.Parse(typeof(ProxyType), address.Scheme, true);
         }
         #endregion
 
-        public void PerformTest()
+        public async Task PerformTest()
         {
-            this._working = Proxy.TestProxy(this);
+            this._working = await Proxy.TestProxy(this);
         }
 
         public override string ToString()
@@ -51,43 +54,43 @@ namespace Proxy.Primitives
 
         #region Private methods
 
-        private static bool TestProxy(Proxy proxy)
+        private static async Task<bool> TestProxy(Proxy proxy)
         {
             bool result = false;
             if (proxy.Exception == null)
-                result = PerformTestRequest(proxy);
+                result = await PerformTestRequest(proxy);
 
             return result;
         }
 
-        private static bool PerformTestRequest(Proxy proxy)
+        private static async Task<bool> PerformTestRequest(Proxy proxy)
         {
-            bool result = false;
-            var request = (HttpWebRequest) WebRequest.Create(DynDnsLink);
-            request.Proxy = new WebProxy(proxy.Address);
-            request.UserAgent =
-                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36";
-            request.Timeout = 15000;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                                                   SecurityProtocolType.Tls11 |
-                                                   SecurityProtocolType.Tls12;
-
-            request.Method = "GET";
-            var now = DateTime.Now;
+            ServicePointManager.Expect100Continue = false;
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            HttpClientHandler clientHandler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = true,
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
+                Proxy = new WebProxy(proxy.Address)
+            };
+                        
             try
             {
-                var response = request.GetResponse();
-                var milisec = (DateTime.Now - now).TotalMilliseconds;
-                proxy.RequestTime = Convert.ToInt32(milisec);
-                result = true;
-            }
-            catch (Exception ex)
-            {
-                proxy.RequestTime = 0;
-                proxy.Exception = new ApplicationException(proxy.Address.ToString(), ex);
-            }
+                using var httpClient = new HttpClient(clientHandler);
 
-            return result;
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, DynDnsLink);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                return true;
+            }
+            catch (HttpRequestException ex)
+            {
+                proxy.Exception = new ApplicationException($"Error during test request. Proxy: {proxy.Address}", ex.InnerException);
+                return false;
+            }
         }
         #endregion
     }

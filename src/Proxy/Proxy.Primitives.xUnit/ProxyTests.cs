@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Proxy.Primitives.xUnit
@@ -11,11 +12,11 @@ namespace Proxy.Primitives.xUnit
         private readonly Uri notAvailProxyUri = new Uri("http://109.87.40.23:60083");
 
         [Fact]
-        public void Check_Available_Proxy()
+        public async Task Check_Available_Proxy()
         {
             var expectedProxyString = $"{availProxyUri};online;";
             var proxy = new Proxy(availProxyUri);
-            proxy.PerformTest();
+            await proxy.PerformTest();
 
             Assert.Equal(ProxyType.HTTP, proxy.Type);
             Assert.Equal(expectedProxyString, proxy.ToString());
@@ -23,10 +24,10 @@ namespace Proxy.Primitives.xUnit
         }
 
         [Fact]
-        public void Check_NotAvailable_Proxy()
+        public async Task Check_NotAvailable_Proxy()
         {
             var proxy = new Proxy(notAvailProxyUri);
-            proxy.PerformTest();
+            await proxy.PerformTest();
 
             Assert.Equal(ProxyType.HTTP, proxy.Type);
             Assert.Equal("offline", proxy.Status);
