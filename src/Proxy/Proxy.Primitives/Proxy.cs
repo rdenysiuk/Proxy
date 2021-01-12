@@ -44,7 +44,7 @@ namespace Proxy.Primitives
 
         public async Task PerformTest()
         {
-            this._working = await Proxy.TestProxy(this);
+            this._working = await PerformTestRequest(this);
         }
 
         public override string ToString()
@@ -53,15 +53,6 @@ namespace Proxy.Primitives
         }
 
         #region Private methods
-
-        private static async Task<bool> TestProxy(Proxy proxy)
-        {
-            bool result = false;
-            if (proxy.Exception == null)
-                result = await PerformTestRequest(proxy);
-
-            return result;
-        }
 
         private static async Task<bool> PerformTestRequest(Proxy proxy)
         {
