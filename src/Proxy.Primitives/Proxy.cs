@@ -17,11 +17,14 @@ namespace Proxy.Primitives
         {
             get
             {
-                return this._working switch
+                switch (_working)
                 {
-                    true => "online",
-                    false => "offline",
-                    _ => "unknown"
+                    case true:
+                        return "online";
+                    case false:
+                        return "offline";
+                    default:
+                        return "unknown";
                 };
             }
         }
@@ -64,18 +67,20 @@ namespace Proxy.Primitives
                 AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
                 Proxy = new WebProxy(proxy.Address)
             };
-                        
+
             try
             {
-                using var httpClient = new HttpClient(clientHandler);
+                using (var httpClient = new HttpClient(clientHandler))
+                {
 
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, DynDnsLink);
-                HttpResponseMessage response = await httpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                return true;
+                    httpClient.DefaultRequestHeaders.Accept.Clear();
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+                    httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, DynDnsLink);
+                    HttpResponseMessage response = await httpClient.SendAsync(request);
+                    response.EnsureSuccessStatusCode();
+                    return true;
+                }
             }
             catch (HttpRequestException ex)
             {
