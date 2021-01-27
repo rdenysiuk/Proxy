@@ -54,7 +54,7 @@ namespace Proxy.Checker.App
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(430, 450);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -62,22 +62,26 @@ namespace Proxy.Checker.App
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cancelButton.Location = new System.Drawing.Point(248, 418);
+            this.cancelButton.Image = global::Proxy.Checker.App.Properties.Resources.cancel;
+            this.cancelButton.Location = new System.Drawing.Point(248, 413);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(84, 23);
             this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Cancel";
+            this.cancelButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // okButton
             // 
             this.okButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.okButton.Location = new System.Drawing.Point(338, 418);
+            this.okButton.Image = global::Proxy.Checker.App.Properties.Resources.accept;
+            this.okButton.Location = new System.Drawing.Point(338, 413);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(84, 23);
+            this.okButton.Size = new System.Drawing.Size(84, 25);
             this.okButton.TabIndex = 1;
             this.okButton.Text = "Ok";
+            this.okButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
@@ -85,7 +89,7 @@ namespace Proxy.Checker.App
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(8, 418);
+            this.label1.Location = new System.Drawing.Point(8, 413);
             this.label1.Margin = new System.Windows.Forms.Padding(3);
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(3);
@@ -100,9 +104,8 @@ namespace Proxy.Checker.App
             this.txtProxyList.Location = new System.Drawing.Point(8, 8);
             this.txtProxyList.Multiline = true;
             this.txtProxyList.Name = "txtProxyList";
-            this.txtProxyList.Size = new System.Drawing.Size(414, 404);
+            this.txtProxyList.Size = new System.Drawing.Size(414, 399);
             this.txtProxyList.TabIndex = 3;
-            this.txtProxyList.Leave += new System.EventHandler(this.txtProxyList_Leave);
             // 
             // AddProxyForm
             // 

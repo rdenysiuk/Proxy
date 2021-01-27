@@ -53,6 +53,9 @@
     <Compile Include="AddProxyForm.Designer.cs">
       <DependentUpon>AddProxyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\ProxyDataModel.cs" />
+    <Compile Include="Logic\ProxyGridModel.cs" />
+    <Compile Include="Logic\ProxyParse.cs" />
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,7 +100,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Abstraction\" />
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accept.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Proxy.Primitives
 {
-    public class Proxy
+    public class ProxyState
     {
         #region Properties
-
         public Uri Address { get; private set; }
         public ProxyType Type { get; private set; }
 
@@ -38,9 +37,18 @@ namespace Proxy.Primitives
         const string DynDnsLink = "http://checkip.dyndns.org/";
 
         #region .ctor
-        public Proxy(Uri address)
+        public ProxyState(Uri address)
         {
-            Address = address;
+            Initial(address);
+        }
+        public ProxyState(string address)
+        {
+            var uri = new Uri(address ?? throw new ArgumentNullException(nameof(address)));
+            Initial(uri);
+        }
+        private void Initial(Uri address)
+        {
+            Address = address ?? throw new ArgumentNullException(nameof(address));
             Type = (ProxyType)Enum.Parse(typeof(ProxyType), address.Scheme, true);
         }
         #endregion
@@ -57,7 +65,7 @@ namespace Proxy.Primitives
 
         #region Private methods
 
-        private static async Task<bool> PerformTestRequest(Proxy proxy)
+        private static async Task<bool> PerformTestRequest(ProxyState proxy)
         {
             ServicePointManager.Expect100Continue = false;
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;

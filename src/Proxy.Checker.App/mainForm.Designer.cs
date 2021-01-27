@@ -84,22 +84,28 @@ namespace Proxy.Checker.App
             // addProxyButton
             // 
             this.addProxyButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.addProxyButton.Image = global::Proxy.Checker.App.Properties.Resources.Add;
             this.addProxyButton.Location = new System.Drawing.Point(3, 3);
             this.addProxyButton.Name = "addProxyButton";
-            this.addProxyButton.Size = new System.Drawing.Size(78, 23);
+            this.addProxyButton.Size = new System.Drawing.Size(78, 24);
             this.addProxyButton.TabIndex = 0;
             this.addProxyButton.Text = "Add";
+            this.addProxyButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.addProxyButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.addProxyButton.UseVisualStyleBackColor = true;
             this.addProxyButton.Click += new System.EventHandler(this.addProxyButton_Click);
             // 
             // clearButton
             // 
             this.clearButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.clearButton.Image = global::Proxy.Checker.App.Properties.Resources.delete;
             this.clearButton.Location = new System.Drawing.Point(3, 33);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(78, 23);
+            this.clearButton.Size = new System.Drawing.Size(78, 24);
             this.clearButton.TabIndex = 1;
             this.clearButton.Text = "Clear";
+            this.clearButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.clearButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.clearButton.UseVisualStyleBackColor = true;
             // 
             // testButton

@@ -15,7 +15,7 @@ namespace Proxy.Primitives.xUnit
         public async Task Check_Available_Proxy()
         {
             var expectedProxyString = $"{availProxyUri};online;";
-            var proxy = new Proxy(availProxyUri);
+            var proxy = new ProxyState(availProxyUri);
             await proxy.PerformTest();
 
             Assert.Equal(ProxyType.HTTP, proxy.Type);
@@ -26,7 +26,7 @@ namespace Proxy.Primitives.xUnit
         [Fact]
         public async Task Check_NotAvailable_Proxy()
         {
-            var proxy = new Proxy(notAvailProxyUri);
+            var proxy = new ProxyState(notAvailProxyUri);
             await proxy.PerformTest();
 
             Assert.Equal(ProxyType.HTTP, proxy.Type);
