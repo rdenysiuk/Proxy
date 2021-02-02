@@ -65,8 +65,8 @@ namespace Proxy.Checker.App
             this.cancelButton.Image = global::Proxy.Checker.App.Properties.Resources.cancel;
             this.cancelButton.Location = new System.Drawing.Point(248, 413);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(84, 23);
-            this.cancelButton.TabIndex = 0;
+            this.cancelButton.Size = new System.Drawing.Size(84, 25);
+            this.cancelButton.TabIndex = 2;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -105,7 +105,7 @@ namespace Proxy.Checker.App
             this.txtProxyList.Multiline = true;
             this.txtProxyList.Name = "txtProxyList";
             this.txtProxyList.Size = new System.Drawing.Size(414, 399);
-            this.txtProxyList.TabIndex = 3;
+            this.txtProxyList.TabIndex = 0;
             // 
             // AddProxyForm
             // 

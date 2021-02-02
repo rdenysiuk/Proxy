@@ -14,7 +14,7 @@ namespace Proxy.Checker.App
         public AddProxyForm(IProxyParse proxyParse)
         {
             InitializeComponent();
-            _proxyParse = proxyParse;            
+            _proxyParse = proxyParse;
         }
 
         public IEnumerable<ProxyState> GetProxies()
@@ -23,8 +23,12 @@ namespace Proxy.Checker.App
             using (var sr = new StringReader(txtProxyList.Text))
             {
                 string line;
-                while ((line = sr.ReadLine()) != null)                
-                    proxies.Add(new ProxyState(_proxyParse.Parse(line)));                
+                while ((line = sr.ReadLine()) != null)
+                {
+                    var uri = _proxyParse.Parse(line);
+                    if (uri != null)
+                        proxies.Add(new ProxyState(uri));
+                }
             }
             return proxies;
         }

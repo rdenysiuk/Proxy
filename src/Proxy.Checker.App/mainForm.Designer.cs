@@ -36,7 +36,7 @@ namespace Proxy.Checker.App
             this.testButton = new System.Windows.Forms.Button();
             this.exportButton = new System.Windows.Forms.Button();
             this.ProxyDataGridView = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtLog = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProxyDataGridView)).BeginInit();
@@ -49,7 +49,7 @@ namespace Proxy.Checker.App
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.ProxyDataGridView, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.txtLog, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -84,7 +84,7 @@ namespace Proxy.Checker.App
             // addProxyButton
             // 
             this.addProxyButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.addProxyButton.Image = global::Proxy.Checker.App.Properties.Resources.Add;
+            this.addProxyButton.Image = global::Proxy.Checker.App.Properties.Resources.add;
             this.addProxyButton.Location = new System.Drawing.Point(3, 3);
             this.addProxyButton.Name = "addProxyButton";
             this.addProxyButton.Size = new System.Drawing.Size(78, 24);
@@ -107,6 +107,7 @@ namespace Proxy.Checker.App
             this.clearButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.clearButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // testButton
             // 
@@ -117,6 +118,7 @@ namespace Proxy.Checker.App
             this.testButton.TabIndex = 2;
             this.testButton.Text = "Test";
             this.testButton.UseVisualStyleBackColor = true;
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
             // exportButton
             // 
@@ -146,14 +148,14 @@ namespace Proxy.Checker.App
             this.ProxyDataGridView.Size = new System.Drawing.Size(478, 395);
             this.ProxyDataGridView.TabIndex = 1;
             // 
-            // textBox1
+            // txtLog
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(8, 409);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(478, 44);
-            this.textBox1.TabIndex = 2;
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Location = new System.Drawing.Point(8, 409);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(478, 44);
+            this.txtLog.TabIndex = 2;
             // 
             // mainForm
             // 
@@ -166,6 +168,7 @@ namespace Proxy.Checker.App
             this.Name = "mainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Proxy check";
+            this.Shown += new System.EventHandler(this.mainForm_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -183,7 +186,7 @@ namespace Proxy.Checker.App
         private System.Windows.Forms.Button testButton;
         private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.DataGridView ProxyDataGridView;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtLog;
     }
 }
 

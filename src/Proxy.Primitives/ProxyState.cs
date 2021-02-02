@@ -64,7 +64,6 @@ namespace Proxy.Primitives
         }
 
         #region Private methods
-
         private static async Task<bool> PerformTestRequest(ProxyState proxy)
         {
             ServicePointManager.Expect100Continue = false;

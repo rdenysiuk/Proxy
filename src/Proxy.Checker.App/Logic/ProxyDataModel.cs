@@ -41,10 +41,15 @@ namespace Proxy.Checker.App.Logic
         #region Private methods
         private void Add(ProxyState proxy)
         {
-            Table.Rows.Add(
+            try
+            {
+                Table.Rows.Add(
                 proxy.Address,
                 proxy.Status);
-            Proxies.Add(proxy);
+                Proxies.Add(proxy);
+            }
+            catch (ConstraintException) { }
+
         }
         #endregion
     }
