@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Proxy.Logic;
+using Proxy.Logic.Astraction;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -29,6 +31,8 @@ namespace Proxy.Primitives
         }
 
         public Exception Exception { get; private set; }
+        
+        [Obsolete]
         public int RequestTime { get; private set; }
 
         #endregion
@@ -36,16 +40,20 @@ namespace Proxy.Primitives
         private bool? _working;
         const string DynDnsLink = "http://checkip.dyndns.org/";
 
+        private readonly IHttpClient _httpClient;
+
         #region .ctor
+        public ProxyState(Uri address, IHttpClient httpClient)
+        {
+            Initial(address);
+            _httpClient = httpClient;
+        }
         public ProxyState(Uri address)
+            : this(address, new ProxyHttpClient())
         {
             Initial(address);
         }
-        public ProxyState(string address)
-        {
-            var uri = new Uri(address ?? throw new ArgumentNullException(nameof(address)));
-            Initial(uri);
-        }
+
         private void Initial(Uri address)
         {
             Address = address ?? throw new ArgumentNullException(nameof(address));
@@ -59,7 +67,7 @@ namespace Proxy.Primitives
         /// <returns></returns>
         public async Task PerformTest()
         {
-            this._working = await PerformTestRequest(this);
+            this._working = await PerformTestRequest(this, _httpClient);
         }
 
         public override string ToString()
@@ -68,7 +76,7 @@ namespace Proxy.Primitives
         }
 
         #region Private methods
-        private static async Task<bool> PerformTestRequest(ProxyState proxy)
+        private static async Task<bool> PerformTestRequest(ProxyState proxy, IHttpClient httpClient)
         {
             ServicePointManager.Expect100Continue = false;
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
@@ -81,17 +89,10 @@ namespace Proxy.Primitives
 
             try
             {
-                using (var httpClient = new HttpClient(clientHandler))
-                {
-
-                    httpClient.DefaultRequestHeaders.Accept.Clear();
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-                    httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, DynDnsLink);
-                    HttpResponseMessage response = await httpClient.SendAsync(request);
-                    response.EnsureSuccessStatusCode();
-                    return true;
-                }
+                var requestMessage = new HttpRequestMessage(HttpMethod.Get, DynDnsLink);
+                var responseMessage = await httpClient.SendAsync(clientHandler, requestMessage);
+                responseMessage.EnsureSuccessStatusCode();
+                return true;
             }
             catch (HttpRequestException ex)
             {
