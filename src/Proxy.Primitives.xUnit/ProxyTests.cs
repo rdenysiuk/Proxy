@@ -8,8 +8,8 @@ namespace Proxy.Primitives.xUnit
     [ExcludeFromCodeCoverage]
     public class ProxyTests
     {
-        private readonly Uri availProxyUri = new Uri("http://212.8.40.78:3131");
-        private readonly Uri notAvailProxyUri = new Uri("http://109.87.40.23:60083");
+        private readonly Uri availProxyUri = new Uri("http://176.241.129.113:3128");
+        private readonly Uri notAvailProxyUri = new Uri("http://176.241.129.113:3127");
 
         [Fact]
         public async Task Check_Available_Proxy()

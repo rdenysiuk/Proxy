@@ -53,6 +53,10 @@ namespace Proxy.Primitives
         }
         #endregion
 
+        /// <summary>
+        ///     Perform the check proxy availability  
+        /// </summary>
+        /// <returns></returns>
         public async Task PerformTest()
         {
             this._working = await PerformTestRequest(this);
